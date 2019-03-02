@@ -1,0 +1,1 @@
+Contains home task for MIPT-course, 6th semester, Industrial Programming
