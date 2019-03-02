@@ -16,6 +16,7 @@ services:
     build: consumer
     environment:
       RABBIT_URL: 'amqp://kailiak:password@rabbit:5672'
+      DB_URL: 'dbname=ints_db user=postgres password=password host=postgres'
     depends_on: 
       - rabbit
   producer:
@@ -26,14 +27,17 @@ services:
       - rabbit
     
 
-  # postgres:
-  #   image: postgres:latest
-  #   restart: always
-    
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'ints_db'
 
-
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  
 
 volumes:
   rabbit_data:
   postgres_data:
-  

@@ -15,6 +15,6 @@ print(4)
 for i in range(100):
     sleep(random.randint(1,10)/100)
     message = random.randint(1,1000)
-    channel.basic_publish(exchange='', routing_key='sendrecqueue', body = str(message))
+    channel.basic_publish(exchange='', routing_key='sendrecqueue', body = str(message).encode())
 
 connection.close()
