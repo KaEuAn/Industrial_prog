@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  rabbit:
+    image: rabbitmq:latest
+    restart: always
+    ports:
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: 'kailiak'
+      RABBITMQ_DEFAULT_PASS: 'password'
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq/mnesia
+  
+  consumer:
+    build: consumer
+    environment:
+      RABBIT_URL: 'amqp://kailiak:password@rabbit:5672'
+    depends_on: 
+      - rabbit
+  producer:
+    build: producer
+    environment:
+      RABBIT_URL: 'amqp://kailiak:password@rabbit:5672'
+    depends_on:
+      - rabbit
+    
+
+  # postgres:
+  #   image: postgres:latest
+  #   restart: always
+    
+
+
+
+volumes:
+  rabbit_data:
+  postgres_data:
+  
