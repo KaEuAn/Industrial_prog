@@ -1,17 +1,26 @@
 import os
 import pika
 import psycopg2
+from time import sleep
 
 print('starting...')
 
-rmq_parameters = pika.URLParameters(os.getenv('RABBIT_URL'))
-print(f'starting with parameters {rmq_parameters}')
-connection = pika.BlockingConnection(rmq_parameters)
-print(f'got connection: {connection}')
-channel = connection.channel()
-print(f'got channel: {channel}')
-channel.queue_declare(queue='sendrecqueue')
-print(' [*] Waiting for messages. To exit press CTRL+C')
+
+for i in range(15):
+    sleep(i + 1)
+    try:
+        rmq_parameters = pika.URLParameters(os.getenv('RABBIT_URL'))
+        print(f'starting with parameters {rmq_parameters}')
+        connection = pika.BlockingConnection(rmq_parameters)
+        print(f'got connection: {connection}')
+        channel = connection.channel()
+        print(f'got channel: {channel}')
+        channel.queue_declare(queue='sendrecqueue')
+        print(' [*] Waiting for messages. To exit press CTRL+C')
+        break
+    except: 
+        pass
+    
 
 db_conn = psycopg2.connect(os.getenv('DB_URL'))
 cursor = db_conn.cursor()
