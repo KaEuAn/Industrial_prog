@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Answer</title>
+  </head>
+  <body>
+    <h3>{{ object.text }}</h3>
+    <form method="POST" action="{% url 'ask' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Ask!">
+    </form>
+    <p><a href="{% url 'ask' %}">Ask question</a></p>
+    <hr>
+    <ul>
+    {% for question in object_list %}
+      <li><a href="{{ question.get_absolute_url }}">{{ question.text }}</a></li>
+    {% endfor %}
+    </ul>
+    </body>
+</html>
