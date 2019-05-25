@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  web:
+    build: website
+    volumes:
+      - ./backend:/app
+    restart: always
+    ports:
+      - "8000:8000"

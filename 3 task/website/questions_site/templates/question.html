@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Questions</title>
+  </head>
+  <body>
+  <p><a href="{% url 'index' %}">Main menu</a></p>
+  <h3>{{ object.text }}</h3>
+    {% for answer in object.answers1 %}
+      <p>[{{ answer.time }}] {{ answer.text }}</p>
+        {% empty %}
+      <p>Нет ответов</p>
+    {% endfor %}
+  <form method="POST" action="{% url 'answer' %}">
+    {{ view.get_form.as_p }}
+    {% csrf_token %}
+  <input type="submit" value="Answer!">
+  </form>
+  </body>
